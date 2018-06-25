@@ -73,7 +73,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class Camera2VideoFragment extends Fragment
+public class Camera2Fragment extends Fragment
         implements FragmentCompat.OnRequestPermissionsResultCallback {
 
     private static final int SENSOR_ORIENTATION_DEFAULT_DEGREES = 90;
@@ -223,8 +223,8 @@ public class Camera2VideoFragment extends Fragment
     private String mNextVideoAbsolutePath;
     private CaptureRequest.Builder mPreviewBuilder;
 
-    public static Camera2VideoFragment newInstance() {
-        return new Camera2VideoFragment();
+    public static Camera2Fragment newInstance() {
+        return new Camera2Fragment();
     }
 
     /**
@@ -604,7 +604,10 @@ public class Camera2VideoFragment extends Fragment
                 + System.currentTimeMillis() + ".mp4";
     }
 
-    private void startRecordingVideo() {
+    /**
+     * 开始录制视频
+     */
+    public void startRecordingVideo() {
         if (null == mCameraDevice || !mTextureView.isAvailable() || null == mPreviewSize) {
             return;
         }
@@ -658,7 +661,10 @@ public class Camera2VideoFragment extends Fragment
         }
     }
 
-    private void stopRecordingVideo() {
+    /**
+     * 停止录制视频
+     */
+    public void stopRecordingVideo() {
         // UI
         mIsRecordingVideo = false;
         // Stop recording
@@ -760,7 +766,8 @@ public class Camera2VideoFragment extends Fragment
             ByteBuffer buffer = img.getPlanes()[0].getBuffer();
             byte[] data = new byte[buffer.remaining()];
             buffer.get(data);
-            cameraCallBack.getData(data, mSensorOrientation, mVideoSize.getWidth(), mVideoSize.getHeight());
+            if (cameraCallBack != null)
+                cameraCallBack.getData(data, mSensorOrientation, mVideoSize.getWidth(), mVideoSize.getHeight());
             img.close();
         }
     };
