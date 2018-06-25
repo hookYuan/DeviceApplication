@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * 实时预览帧 setPreviewCallback
  * 相机实时预览操作类
- *
  * @author yuanye
  */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback, PreviewCallback {
